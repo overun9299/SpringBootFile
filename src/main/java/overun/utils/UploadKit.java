@@ -1,6 +1,7 @@
 package overun.utils;
 
-import cn.minsin.core.tools.StringUtil;
+
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
@@ -70,9 +71,11 @@ public class UploadKit {
         /** 取得上传文件 */
         String diskFileName = null;
         MultipartFile file = multiRequest.getFile(path);
-        if (StringUtil.isBlank(file)) {
+
+        if (StringUtils.isBlank(file.getOriginalFilename())) {
             return null;
         }
+
         String fileMD5 = fileMd5(file.getBytes());
         /** 原名称 带后缀 */
         String originalName = file.getOriginalFilename();

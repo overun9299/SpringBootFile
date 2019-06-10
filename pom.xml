@@ -56,12 +56,7 @@
             <version>3.7</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/cn.minsin/mutils-core -->
-        <dependency>
-            <groupId>cn.minsin</groupId>
-            <artifactId>mutils-core</artifactId>
-            <version>0.3.7</version>
-        </dependency>
+
 
     </dependencies>
 
