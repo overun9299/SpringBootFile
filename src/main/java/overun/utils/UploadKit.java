@@ -26,29 +26,17 @@ public class UploadKit {
 
     /**
      * 单文件上传
-     * @param request 请求对象
+     * @param multipartFile 请求对象
      * @param filePath 文件存放文件夹
      * @param useNewName 是否使用原文件名称还是使用随机生成的文件名称
      * @return
      */
-    public static UploadFileEntity getFile(HttpServletRequest request, String filePath, boolean useNewName) {
-
-        /** 创建一个通用的多部分解析器 */
-        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
+    public static UploadFileEntity uploadFile(MultipartFile multipartFile, String filePath, boolean useNewName) {
 
         try {
-            /** 判断 request 是否有文件上传,即多部分请求 */
-            if (multipartResolver.isMultipart(request)) {
-                /** 转换成多部分request */
-                MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
-                /** 取得request中的所有文件名 */
-                Iterator<String> fileNames = multiRequest.getFileNames();
-                while (fileNames.hasNext()) {
-                    UploadFileEntity f = transferFile(fileNames.next(),filePath,multiRequest,useNewName);
-                    if(f!=null){
-                        return f;
-                    }
-                }
+            UploadFileEntity f = transferFile(filePath,multipartFile,useNewName);
+            if(f!=null){
+                return f;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -61,16 +49,15 @@ public class UploadKit {
      * 封装文件信息
      * @param path
      * @param filePath
-     * @param multiRequest
+     * @param file
      * @param useNewName
      * @return
      * @throws Exception
      */
-    private static UploadFileEntity transferFile(String path,String filePath,MultipartHttpServletRequest multiRequest, boolean useNewName) throws Exception{
+    private static UploadFileEntity transferFile(String filePath,MultipartFile file, boolean useNewName) throws Exception{
 
         /** 取得上传文件 */
         String diskFileName = null;
-        MultipartFile file = multiRequest.getFile(path);
 
         if (StringUtils.isBlank(file.getOriginalFilename())) {
             return null;

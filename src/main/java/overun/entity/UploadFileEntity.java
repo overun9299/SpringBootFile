@@ -82,4 +82,17 @@ public class UploadFileEntity {
     public void setUploadTime(Date uploadTime) {
         this.uploadTime = uploadTime;
     }
+
+    @Override
+    public String toString() {
+        return "UploadFileEntity{" +
+                "id='" + id + '\'' +
+                ", origName='" + origName + '\'' +
+                ", newName='" + newName + '\'' +
+                ", serverPath='" + serverPath + '\'' +
+                ", fileSize=" + fileSize +
+                ", fileMd5='" + fileMd5 + '\'' +
+                ", uploadTime=" + uploadTime +
+                '}';
+    }
 }
