@@ -2,10 +2,7 @@ package overun.utils;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.URLEncoder;
 
 /**
@@ -31,22 +28,22 @@ public class DownloadKit {
         if (!sourceFile.exists()) {
             throw new RuntimeException("您下载的资源已不存在");
         }
-        BufferedInputStream in = null;
-        ServletOutputStream out = null;
+        DataInputStream   in = null;
+        ServletOutputStream  out = null;
         try {
             /** 解决下载文件名乱码 */
             fileName = URLEncoder.encode(fileName, "UTF-8");
             response.setCharacterEncoding("UTF-8");
             response.setContentType("application/octet-stream");
             response.setHeader("Content-Disposition", "attachment;filename=" + fileName);
-            in = new BufferedInputStream(new FileInputStream(sourceFile));
+            in = new DataInputStream(new FileInputStream(sourceFile));
             out = response.getOutputStream();
-            byte[] buffer = new byte[1024 * 1024 * 10];
-            int len = 0;
-            while ((len = in.read(buffer)) != -1) {
-                out.write(buffer, 0, len);
+            byte[] buffer = new byte[1024];
+            int readTmp = 0;
+            while ((readTmp = in.read(buffer)) != -1) {
+                out.write(buffer, 0, readTmp);
             }
-            out.flush();
+
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException(fileName + " 下载出错,若有问题请与管理员联系");

@@ -43,7 +43,7 @@ public class fileController {
     @GetMapping(value = "download")
     public void fileDownLoad(HttpServletResponse response) {
         try {
-            DownloadKit.download(response,"D:\\uploadTest\\[1560138336759] - banner.txt","123.txt");
+            DownloadKit.download(response,"D:\\uploadTest\\123.xlsx","586.xlsx");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
