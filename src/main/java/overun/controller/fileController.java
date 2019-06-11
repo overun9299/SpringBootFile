@@ -40,10 +40,10 @@ public class fileController {
     }
 
     @ApiOperation("测试文件下载")
-    @GetMapping(value = "download")
+    @GetMapping(value = "/download")
     public void fileDownLoad(HttpServletResponse response) {
         try {
-            DownloadKit.download(response,"D:\\uploadTest\\123.xlsx","586.xlsx");
+            DownloadKit.download(response,"D:\\uploadTest\\[1560147654953] - 20171229094846.png","586.png");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

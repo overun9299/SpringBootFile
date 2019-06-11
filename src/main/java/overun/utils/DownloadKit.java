@@ -28,20 +28,23 @@ public class DownloadKit {
         if (!sourceFile.exists()) {
             throw new RuntimeException("您下载的资源已不存在");
         }
-        DataInputStream   in = null;
-        ServletOutputStream  out = null;
+        FileInputStream in = null;
+        BufferedInputStream bis = null;
+        OutputStream out = null;
         try {
             /** 解决下载文件名乱码 */
             fileName = URLEncoder.encode(fileName, "UTF-8");
             response.setCharacterEncoding("UTF-8");
-            response.setContentType("application/octet-stream");
+            response.setContentType("application/force-download");
             response.setHeader("Content-Disposition", "attachment;filename=" + fileName);
-            in = new DataInputStream(new FileInputStream(sourceFile));
+            in = new FileInputStream(sourceFile);
+            bis =new BufferedInputStream(in);
             out = response.getOutputStream();
             byte[] buffer = new byte[1024];
-            int readTmp = 0;
-            while ((readTmp = in.read(buffer)) != -1) {
+            int readTmp = bis.read(buffer);
+            while (readTmp != -1) {
                 out.write(buffer, 0, readTmp);
+                readTmp = bis.read(buffer);
             }
 
         } catch (IOException e) {
@@ -50,6 +53,7 @@ public class DownloadKit {
         } finally {
             out.close();
             in.close();
+            bis.close();
         }
         return true;
     }
