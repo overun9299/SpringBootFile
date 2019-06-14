@@ -74,17 +74,13 @@ public class DownloadKit {
         BufferedInputStream bis = null;
         BufferedOutputStream bos = null;
 
-        /** 如果不存在乱码的情况可以忽略，由于请求参数文件名为中文，到后台会乱码，考虑操作系统和客户端浏览器默认编码 */
-        /** 判断服务器操作系统，本地开发使用windows */
-        String os = System.getProperty("os.name");
-        if(os.toLowerCase().indexOf("windows") != -1){
-            name = new String(name.getBytes("GBK"), "ISO-8859-1");
-        }else{
-            /** 判断浏览器 */
-            String userAgent = request.getHeader("User-Agent").toLowerCase();
-            if(userAgent.indexOf("msie") > 0){
-                name = URLEncoder.encode(name, "ISO-8859-1");
-            }
+        /** 如果不存在乱码的情况可以忽略，由于请求参数文件名为中文，到后台会乱码，考虑客户端浏览器默认编码 */
+        String userAgent = request.getHeader("User-Agent");
+        if (userAgent.contains("MSIE") || userAgent.contains("Trident")) {
+            name = java.net.URLEncoder.encode(name, "UTF-8");
+        } else {
+            /** 非IE浏览器的处理 */
+            name = new String(name.getBytes("UTF-8"), "ISO-8859-1");
         }
         /** 响应二进制流 */
         response.setContentType("application/octet-stream");
