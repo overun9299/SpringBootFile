@@ -2,7 +2,7 @@ package overun.utils;
 
 /**
  * @ClassName: NetworkFiles
- * @Description: 此方法适用于下载网络文件并且实现可编辑改名，不许有后台代码前端JS可实现。
+ * @Description: 此方法适用于下载网络文件并且实现可编辑改名，不需要有后台代码前端JS可实现。
  * @author: 薏米滴答-西安-ZhangPY
  * @version: V1.0
  * @date: 2019/6/10 11:51
