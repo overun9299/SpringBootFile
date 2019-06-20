@@ -1,6 +1,8 @@
 package overun.utils;
 
 
+import net.coobird.thumbnailator.Thumbnailator;
+import net.coobird.thumbnailator.Thumbnails;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -13,6 +15,7 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.UUID;
 
 /**
  * @ClassName: UploadKit
@@ -68,8 +71,12 @@ public class UploadKit {
         String originalName = file.getOriginalFilename();
         /** 后缀名 */
         String fileSuffix = originalName.substring(originalName.lastIndexOf("."));
+        /** 时间戳 */
+        long timeTampe = System.currentTimeMillis();
         /** 新名称 */
-        String newName =  System.currentTimeMillis() + fileSuffix;
+        String newName =  timeTampe + fileSuffix;
+        /** 缩略图名称 */
+        String abbreviationName = timeTampe + "-Abbreviation" + fileSuffix;
         /** 文件存放在磁盘上的最终名称、若文件使用原名称、使用时间缀解决文件重名问题 */
         if (!useNewName) {
             diskFileName = "["+System.currentTimeMillis() +"] - "+originalName;
@@ -79,6 +86,10 @@ public class UploadKit {
         /** 文件大小 */
         Long fileSize = file.getSize();
         File directory = new File(filePath);
+
+        /** 生成缩略图  scale:比例  outputQuality:生成质量  */
+        Thumbnails.of(file.getInputStream()).scale(0.25f).outputQuality(0.2f).toFile(filePath + "/" + abbreviationName);
+
         if (!directory.exists()) {
             directory.mkdirs();
         }

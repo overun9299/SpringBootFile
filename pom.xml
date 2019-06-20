@@ -7,7 +7,7 @@
     <groupId>overun</groupId>
     <artifactId>SpringBootFile</artifactId>
     <version>1.0-SNAPSHOT</version>
-    
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -66,6 +66,13 @@
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
             <version>2.7.0</version>
+        </dependency>
+
+        <!-- 压缩文件 -->
+        <dependency>
+            <groupId>net.coobird</groupId>
+            <artifactId>thumbnailator</artifactId>
+            <version>0.4.7</version>
         </dependency>
 
 

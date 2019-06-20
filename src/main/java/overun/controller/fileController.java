@@ -35,7 +35,7 @@ public class fileController {
     @ApiOperation("测试文件上传")
     @PostMapping(value = "/upload" ,consumes = "multipart/*",headers="content-type=multipart/form-data")
     public void fileUpload(@ApiParam(value = "上传的文件"  , required = true) MultipartFile multipartFile , HttpServletRequest request) {
-        UploadFileEntity file = UploadKit.uploadFile(multipartFile, "D:\\uploadTest", false);
+        UploadFileEntity file = UploadKit.uploadFile(multipartFile, "D:\\uploadTest", true);
         System.out.println(file.toString());
     }
 
